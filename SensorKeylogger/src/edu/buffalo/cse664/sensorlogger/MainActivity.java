@@ -1,6 +1,8 @@
 package edu.buffalo.cse664.sensorlogger;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.hardware.Sensor;
 import android.os.Bundle;
 import android.view.Menu;
 import edu.buffalo.cse664.sensorlogger.database.DatabaseHandler;
@@ -8,36 +10,35 @@ import edu.buffalo.cse664.sensorlogger.view.SurfaceLoggerView;
 
 public class MainActivity extends Activity {
 
-	public static Object db_lock = new Object();
 	public static DatabaseHandler db;
 	private SurfaceLoggerView surface;
-	private SensorHandler sensorHandler;
+	private SensorHandler sensorAcc;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		surface = (SurfaceLoggerView)findViewById(R.id.surfacelogger);
-		sensorHandler = new SensorHandler(this);
+		sensorAcc = new SensorHandler(this, Sensor.TYPE_ACCELEROMETER);
 	}
 
 	@Override
 	public void onStart(){
 		super.onStart();
-		synchronized(db_lock){
+		synchronized(this){
 			db = new DatabaseHandler(this);
 		}
-		sensorHandler.startListening();
+		sensorAcc.startListening();
 	}
 	
 	@Override
 	public void onStop(){
 		super.onStop();
-		synchronized(db_lock){
+		synchronized(this){
 			db.close();
 			db = null;
 		}
-		sensorHandler.stopListening();
+		sensorAcc.stopListening();
 	}
 	
 	@Override
@@ -46,5 +47,10 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	public static boolean insertToDatabase(String table, ContentValues values){
+		if(db == null) return false;
+		db.intsertValues(table, values);
+		return true;
+	}
 	
 }

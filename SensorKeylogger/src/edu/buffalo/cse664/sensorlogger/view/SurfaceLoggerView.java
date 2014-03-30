@@ -76,13 +76,8 @@ public class SurfaceLoggerView extends SurfaceView implements OnTouchListener {
 			values.put(Constants.COL_HEIGHT, height);
 			values.put(Constants.COL_WIDTH, width);
 			values.put(Constants.COL_DPI, dpi);
-			
-			synchronized(MainActivity.db_lock){
-				if(MainActivity.db != null){
-					MainActivity.db.intsertValues(Constants.TABLE_CLICKS, values);
-				}
-			}
-			
+			MainActivity.insertToDatabase(Constants.TABLE_CLICKS, values);
+			return;
 		}
 	}
 	

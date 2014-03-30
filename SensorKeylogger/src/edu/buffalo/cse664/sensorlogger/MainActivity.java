@@ -9,19 +9,22 @@ public class MainActivity extends Activity {
 
 	private mSurfaceView surface;
 	private SensorHandler sensorAcc;
+	private SensorHandler sensorGyr;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		surface = (mSurfaceView)findViewById(R.id.surfacelogger);
-		sensorAcc = new SensorHandler(this, Sensor.TYPE_ACCELEROMETER);
+		sensorAcc = new SensorHandler(this, Sensor.TYPE_ACCELEROMETER, "Accelerometer");
+		sensorGyr = new SensorHandler(this, Sensor.TYPE_GYROSCOPE, "Gyroscope");
 	}
 
 	@Override
 	public void onStart(){
 		super.onStart();
-		//sensorAcc.startListening();
+		sensorAcc.startListening();
+		sensorGyr.startListening();
 	}
 	
 	@Override
@@ -39,7 +42,8 @@ public class MainActivity extends Activity {
 	@Override
 	public void onStop(){
 		super.onStop();
-		//sensorAcc.stopListening();
+		sensorAcc.stopListening();
+		sensorGyr.stopListening();
 	}
 	
 	@Override

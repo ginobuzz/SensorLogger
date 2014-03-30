@@ -40,6 +40,7 @@ public class BufferedFileWriter {
 	public synchronized void close(){
 		if(mWriter == null) return;
 		try {
+			mWriter.flush();
 			mWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();

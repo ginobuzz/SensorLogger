@@ -9,7 +9,6 @@ import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
-import edu.buffalo.cse664.sensorlogger.database.Constants;
 
 public class SensorHandler implements SensorEventListener {
 
@@ -62,15 +61,15 @@ public class SensorHandler implements SensorEventListener {
 		@Override
 		public void run(){
 			ContentValues values = new ContentValues();
-			values.put(Constants.COL_TIME, event.timestamp);
-			values.put(Constants.COL_SENSOR, event.sensor.getType());
-			values.put(Constants.COL_X, event.values[0]);
-			values.put(Constants.COL_Y, event.values[1]);
-			values.put(Constants.COL_Z, event.values[2]);
-			values.put(Constants.COL_ACC, event.accuracy);
-			if(!MainActivity.insertToDatabase(Constants.TABLE_SENSORS, values))
-				stopListening();
-			return;
+			//values.put(Constants.COL_TIME, event.timestamp);
+			//values.put(Constants.COL_SENSOR, event.sensor.getType());
+			///values.put(Constants.COL_X, event.values[0]);
+			//values.put(Constants.COL_Y, event.values[1]);
+			//values.put(Constants.COL_Z, event.values[2]);
+			//values.put(Constants.COL_ACC, event.accuracy);
+			//if(!MainActivity.insertToDatabase(Constants.TABLE_SENSORS, values))
+			//	stopListening();
+			//return;
 		}
 	}
 	

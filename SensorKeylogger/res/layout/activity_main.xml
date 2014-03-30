@@ -12,11 +12,19 @@
     tools:context=".MainActivity" >
 
     
-    <edu.buffalo.cse664.sensorlogger.view.SurfaceLoggerView
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Press the blue dot as it appears."
+        android:gravity="center"
+        android:padding="10dp"
+        android:textSize="18sp"/>
+    
+    <edu.buffalo.cse664.sensorlogger.mSurfaceView
        android:id="@+id/surfacelogger"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:background="#F2F2F2"/>
+       />
     
     
 </LinearLayout>

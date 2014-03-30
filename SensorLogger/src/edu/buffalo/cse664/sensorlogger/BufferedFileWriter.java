@@ -9,11 +9,13 @@ import android.content.Context;
 
 public class BufferedFileWriter {
 
+	public static final String directory = "Events";
+	
 	private File mFile;
 	private BufferedWriter mWriter;
 	
 	public BufferedFileWriter(Context context, String filename, String[] columns){
-		mFile = new File(context.getFilesDir(), filename);
+		mFile = new File(context.getFilesDir(), directory + File.separator + filename);
 		
 		mWriter = null;
 		try {

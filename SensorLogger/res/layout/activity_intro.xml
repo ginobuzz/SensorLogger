@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="29dp"
+    android:background="#F2F2F2">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="Optional Information:" 
+        android:textSize="20sp"
+        android:textColor="#1958CF"/>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Begin Experiment" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button1"
+        android:layout_below="@+id/textView1"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
+
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" I am currently standing."
+            android:layout_marginBottom="50dp" 
+        	android:textColor="#6395F2"
+    		android:padding="22dp"/>
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" There is a case on my phone."
+       	 	android:textColor="#6395F2" 
+    		android:padding="22dp"/>
+        
+    </LinearLayout>
+
+</RelativeLayout>

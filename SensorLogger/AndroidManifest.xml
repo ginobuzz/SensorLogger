@@ -31,6 +31,10 @@
             android:name="edu.buffalo.cse664.sensorlogger.MainActivity"
             android:screenOrientation="portrait"/>
         
+        <activity 
+            android:name="edu.buffalo.cse664.sensorlogger.FinalActivity"
+            android:screenOrientation="portrait"/>
+        
     </application>
 
 </manifest>

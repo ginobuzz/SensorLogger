@@ -1,6 +1,7 @@
 package edu.buffalo.cse664.sensorlogger;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 	
 	private mSurfaceView surface;
 	private SensorRecorder sensorRecorder;
+	private Intent finalIntent;
 	
 	
 	@Override
@@ -22,16 +24,13 @@ public class MainActivity extends Activity implements OnTouchListener {
 		surface = (mSurfaceView)findViewById(R.id.surfacelogger);
 		surface.setOnTouchListener(this);
 		sensorRecorder = new SensorRecorder(this);
-		//sensorAcc = new SensorHandler(this, Sensor.TYPE_ACCELEROMETER, "Accelerometer");
-		//sensorGyr = new SensorHandler(this, Sensor.TYPE_GYROSCOPE, "Gyroscope");
+		finalIntent = new Intent(this, FinalActivity.class);
 	}
 
 	@Override
 	public void onStart(){
 		super.onStart();
 		sensorRecorder.start();
-		//sensorAcc.startListening();
-		//sensorGyr.startListening();
 	}
 	
 	@Override
@@ -44,14 +43,13 @@ public class MainActivity extends Activity implements OnTouchListener {
 	public void onPause(){
 		super.onPause();
 		surface.pause();
+		finish();
 	}
 	
 	@Override
 	public void onStop(){
 		super.onStop();
 		sensorRecorder.stop();
-		//sensorAcc.stopListening();
-		//sensorGyr.stopListening();
 	}
 	
 	@Override
@@ -66,7 +64,8 @@ public class MainActivity extends Activity implements OnTouchListener {
 		if(surface.count > MAX_TOUCH){
 			surface.pause();
 			sensorRecorder.stop();
-			//QUIT
+			startActivity(finalIntent);
+			finish();
 		}
 		return false;
 	}

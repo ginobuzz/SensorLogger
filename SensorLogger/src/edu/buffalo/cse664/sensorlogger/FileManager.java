@@ -50,7 +50,7 @@ public class FileManager {
 		if(mWriter==null)return;
 		synchronized(mWriter){
 			try {
-				mWriter.write(line);
+				mWriter.write(line + '\n');
 				Log.d(TAG + "(" + fid + ")", "Write.");
 			} catch (IOException e) {
 				Log.e(TAG + "(" + fid + ")", "Failed to write to file.");

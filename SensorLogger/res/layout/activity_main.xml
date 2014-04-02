@@ -2,28 +2,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#F2F2F2"
+    android:background="@color/White"
     tools:context=".MainActivity" >
 
-    
+     <FrameLayout
+         android:id="@+id/title"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+
+         <include layout="@layout/titleview" />
+     </FrameLayout>
+     
     <TextView 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Press the blue dot as it appears."
+        android:text="Press the dots as they appear."
         android:gravity="center"
         android:padding="10dp"
         android:textSize="18sp"/>
+    
+     <View
+     	android:layout_width="match_parent"
+     	android:layout_height="1dp"
+     	android:background="#E6E6E6" />
+
     
     <edu.buffalo.cse664.sensorlogger.mSurfaceView
        android:id="@+id/surfacelogger"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
+       android:padding="10dp"
        />
     
     

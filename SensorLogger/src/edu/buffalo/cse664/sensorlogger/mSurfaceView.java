@@ -25,15 +25,10 @@ public class mSurfaceView extends SurfaceView implements Runnable {
 	private boolean running = false;
 	private FileManager mWriter;
 	public int count;
+	public int color;
 	
 	public mSurfaceView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mHolder = getHolder();
-		mPaint = new Paint();
-		mPaint.setColor(Color.BLUE);
-		mRand = new Random();
-		mX = mY = -100;
-		count = 0;
 	}
 
 	@Override
@@ -42,13 +37,20 @@ public class mSurfaceView extends SurfaceView implements Runnable {
 			if(!mHolder.getSurface().isValid()) continue;
 			//else...
 			Canvas canvas = mHolder.lockCanvas();
-			canvas.drawColor(Color.LTGRAY);
+			canvas.drawColor(color);
 			canvas.drawCircle(mX, mY, CIRCLE_RADIUS, mPaint);
 			mHolder.unlockCanvasAndPost(canvas);
 		}
 	}
 	
-	public void resume(Context context){
+	public void resume(Context context){mHolder = getHolder();
+		mPaint = new Paint();
+		mPaint.setAntiAlias(true);
+		mPaint.setColor(Color.parseColor("#63AFFF"));
+		mRand = new Random();
+		mX = mY = -100;
+		count = 0;
+		color = Color.parseColor("#F2F2F2");
 		mWriter = new FileManager(context, FileManager.TOUCH);
 		running = true;
 		mDrawThread = new Thread(this);

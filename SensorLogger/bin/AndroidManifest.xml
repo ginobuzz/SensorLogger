@@ -9,14 +9,16 @@
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        
         <activity
-            android:name="edu.buffalo.cse664.sensorlogger.MainActivity"
+            android:name="edu.buffalo.cse664.sensorlogger.IntroActivity"
             android:label="@string/app_name" 
             android:screenOrientation="portrait">
             <intent-filter>
@@ -24,6 +26,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity 
+            android:name="edu.buffalo.cse664.sensorlogger.MainActivity"
+            android:screenOrientation="portrait"/>
+        
+        <activity 
+            android:name="edu.buffalo.cse664.sensorlogger.FinalActivity"
+            android:screenOrientation="portrait"/>
+        
     </application>
 
 </manifest>

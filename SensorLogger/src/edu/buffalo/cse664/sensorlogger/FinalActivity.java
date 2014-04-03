@@ -1,17 +1,19 @@
 package edu.buffalo.cse664.sensorlogger;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -59,10 +61,15 @@ public class FinalActivity extends Activity {
 	}
 	
 	private void post(File file){
-		final String URL = "www.google.com";
+		final String URL = "ec2-54-186-155-22.us-west-2.compute.amazonaws.com/data/sensors";
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(URL);
-		// Set Entity
+		
+		try {
+			post.setEntity(new InputStreamEntity(new FileInputStream(file), -1));
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		
 		try {
 			HttpResponse response = client.execute(post);

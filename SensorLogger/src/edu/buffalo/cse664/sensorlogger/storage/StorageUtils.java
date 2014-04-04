@@ -41,6 +41,10 @@ public class StorageUtils {
 		return dir;
 	}
 	
+	public static void clearCache(Context context){
+		File cache = getExternalDirectory(context);
+		cache.delete();
+	}
 	
 	
 

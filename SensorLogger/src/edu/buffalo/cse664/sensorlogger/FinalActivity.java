@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import edu.buffalo.cse664.sensorlogger.network.NetworkClient;
+import edu.buffalo.cse664.sensorlogger.storage.StorageUtils;
 import edu.buffalo.cse664.sensorlogger.storage.Zipper;
 
 public class FinalActivity extends Activity {
@@ -59,6 +60,7 @@ public class FinalActivity extends Activity {
 		
 		bt.setText("Exit");
 		bt.setClickable(true);
+		StorageUtils.clearCache(this);
 	}
 	
 

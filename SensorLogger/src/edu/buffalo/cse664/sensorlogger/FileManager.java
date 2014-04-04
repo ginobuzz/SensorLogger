@@ -34,7 +34,7 @@ public class FileManager {
 	
 	public FileManager(Context context, int fileID){
 		fid = fileID;
-		dir = new File(context.getFilesDir() + File.separator + DIRECTORY);
+		dir = new File(context.getFilesDir(), DIRECTORY);
 		dir.mkdirs();
 		file = new File(dir, FILENAME[fid]);
 		try {
@@ -51,7 +51,7 @@ public class FileManager {
 		synchronized(mWriter){
 			try {
 				mWriter.write(line + '\n');
-				Log.d(TAG + "(" + fid + ")", "Write.");
+				//Log.d(TAG + "(" + fid + ")", "Write.");
 			} catch (IOException e) {
 				Log.e(TAG + "(" + fid + ")", "Failed to write to file.");
 			}
@@ -61,7 +61,7 @@ public class FileManager {
 	
 	public synchronized void close(){
 		try {
-			if(mWriter==null)return;
+			if(mWriter==null) return;
 			synchronized(mWriter){
 				mWriter.flush();
 				mWriter.close();

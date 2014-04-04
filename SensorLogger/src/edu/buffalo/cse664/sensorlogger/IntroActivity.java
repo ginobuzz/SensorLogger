@@ -10,6 +10,8 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import edu.buffalo.cse664.sensorlogger.storage.EventWriter;
+import edu.buffalo.cse664.sensorlogger.storage.FileConstants;
 
 public class IntroActivity extends Activity {
 	
@@ -55,7 +57,7 @@ public class IntroActivity extends Activity {
 	}
 
 	private void saveMetadata(){
-		FileManager writer = new FileManager(this, FileManager.METADATA);
+		EventWriter writer = new EventWriter(this, FileConstants.FILENAME[0]);
 		String time = String.valueOf(System.currentTimeMillis());
 		String imei = String.valueOf(IMEI);
 		String s = ((standing)? "1" : "0");

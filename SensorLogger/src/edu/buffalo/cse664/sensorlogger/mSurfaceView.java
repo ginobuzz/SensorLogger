@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import edu.buffalo.cse664.sensorlogger.storage.EventWriter;
+import edu.buffalo.cse664.sensorlogger.storage.FileConstants;
 
 
 public class mSurfaceView extends SurfaceView implements Runnable {
@@ -23,12 +25,18 @@ public class mSurfaceView extends SurfaceView implements Runnable {
 	private Paint mPaint;
 	private Random mRand;
 	private boolean running = false;
-	private FileManager mWriter;
+	private EventWriter mWriter;
 	public int count;
 	public int color;
 	
 	public mSurfaceView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		mWriter = new EventWriter(context, FileConstants.FILENAME[1]);
+		mPaint = new Paint();
+		mPaint.setAntiAlias(true);
+		mPaint.setColor(Color.parseColor("#63AFFF"));
+		mRand = new Random();
+		color = Color.parseColor("#F2F2F2");
 	}
 
 	@Override
@@ -44,24 +52,18 @@ public class mSurfaceView extends SurfaceView implements Runnable {
 	}
 	
 	public void resume(Context context){mHolder = getHolder();
-		mPaint = new Paint();
-		mPaint.setAntiAlias(true);
-		mPaint.setColor(Color.parseColor("#63AFFF"));
-		mRand = new Random();
 		mX = mY = -100;
 		count = 0;
-		color = Color.parseColor("#F2F2F2");
-		mWriter = new FileManager(context, FileManager.TOUCH);
 		running = true;
 		mDrawThread = new Thread(this);
-		newDotLocation();
 		mDrawThread.start();
+		newDotLocation();
 	}
 	
 	public void pause(){
 		running = false;
-		this.setOnTouchListener(null);
 		mWriter.close();
+		setOnTouchListener(null);
 	}
 
 	public void recordEvent(MotionEvent event){

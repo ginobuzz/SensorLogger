@@ -10,7 +10,7 @@ import android.view.View.OnTouchListener;
 
 public class MainActivity extends Activity implements OnTouchListener {
 
-	private static final int MAX_TOUCH = 15;
+	private static final int MAX_TOUCH = 5;
 	
 	private mSurfaceView surface;
 	private SensorRecorder sensorRecorder;
@@ -30,26 +30,26 @@ public class MainActivity extends Activity implements OnTouchListener {
 	@Override
 	public void onStart(){
 		super.onStart();
-		sensorRecorder.start();
 	}
 	
 	@Override
 	public void onResume(){
 		super.onResume();
 		surface.resume(this);
+		sensorRecorder.start();
 	}
 	
 	@Override
 	public void onPause(){
 		super.onPause();
 		surface.pause();
-		finish();
+		sensorRecorder.stop();
 	}
 	
 	@Override
 	public void onStop(){
 		super.onStop();
-		sensorRecorder.stop();
+		finish();
 	}
 	
 	@Override
@@ -62,12 +62,11 @@ public class MainActivity extends Activity implements OnTouchListener {
 	public boolean onTouch(View v, MotionEvent event) {
 		surface.recordEvent(event);
 		if(surface.count > MAX_TOUCH){
-			surface.pause();
-			sensorRecorder.stop();
 			startActivity(finalIntent);
 			finish();
 		}
 		return false;
 	}
 	
+
 }

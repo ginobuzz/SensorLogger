@@ -10,11 +10,11 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import edu.buffalo.cse664.sensorlogger.storage.EventWriter;
-import edu.buffalo.cse664.sensorlogger.storage.FileConstants;
+import edu.buffalo.cse664.sensorlogger.storage.StorageWriter;
+import edu.buffalo.cse664.sensorlogger.storage.StorageConsts;
 
 
-public class mSurfaceView extends SurfaceView implements Runnable {
+public class TouchRecorder extends SurfaceView implements Runnable {
 
 	public static final String TAG = "mSurfaceView";
 	public static final int CIRCLE_RADIUS = 50;
@@ -25,13 +25,13 @@ public class mSurfaceView extends SurfaceView implements Runnable {
 	private Paint mPaint;
 	private Random mRand;
 	private boolean running = false;
-	private EventWriter mWriter;
+	private StorageWriter mWriter;
 	public int count;
 	public int color;
 	
-	public mSurfaceView(Context context, AttributeSet attrs) {
+	public TouchRecorder(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mWriter = new EventWriter(context, FileConstants.FILENAME[1]);
+		mWriter = new StorageWriter(context, StorageConsts.FILE_TOUCH);
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		mPaint.setColor(Color.parseColor("#63AFFF"));
@@ -50,6 +50,13 @@ public class mSurfaceView extends SurfaceView implements Runnable {
 			mHolder.unlockCanvasAndPost(canvas);
 		}
 	}
+	
+	@Override
+    protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld)
+    {        
+        super.onSizeChanged(xNew, yNew, xOld, yOld);
+        newDotLocation();
+    }
 	
 	public void resume(Context context){mHolder = getHolder();
 		mX = mY = -100;

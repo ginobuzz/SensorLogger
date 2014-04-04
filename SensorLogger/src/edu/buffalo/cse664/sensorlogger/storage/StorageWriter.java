@@ -8,15 +8,15 @@ import java.io.IOException;
 import android.content.Context;
 import android.util.Log;
 
-public class EventWriter {
+public class StorageWriter {
 
 	public static final String TAG = "Writer";
 	private BufferedWriter mWriter = null;
 	private Boolean mWriteLock;
 	private File file;
 	
-	public EventWriter(Context context, String name){
-		File dir = FileUtils.getExternalDirectory(context);
+	public StorageWriter(Context context, String name){
+		File dir = StorageUtils.getExternalDirectory(context);
 		file = new File(dir, name);
 		mWriteLock = false;
 		try {

@@ -10,9 +10,9 @@ import android.view.View.OnTouchListener;
 
 public class MainActivity extends Activity implements OnTouchListener {
 
-	private static final int MAX_TOUCH = 5;
+	private static final int MAX_TOUCH = 15;
 	
-	private mSurfaceView surface;
+	private TouchRecorder surface;
 	private SensorRecorder sensorRecorder;
 	private Intent finalIntent;
 	
@@ -21,7 +21,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		surface = (mSurfaceView)findViewById(R.id.surfacelogger);
+		surface = (TouchRecorder)findViewById(R.id.surfacelogger);
 		surface.setOnTouchListener(this);
 		sensorRecorder = new SensorRecorder(this);
 		finalIntent = new Intent(this, FinalActivity.class);

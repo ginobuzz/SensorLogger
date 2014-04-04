@@ -1,17 +1,21 @@
 package edu.buffalo.cse664.sensorlogger;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import edu.buffalo.cse664.sensorlogger.storage.EventWriter;
-import edu.buffalo.cse664.sensorlogger.storage.FileConstants;
+import edu.buffalo.cse664.sensorlogger.storage.StorageConsts;
+import edu.buffalo.cse664.sensorlogger.storage.StorageUtils;
+import edu.buffalo.cse664.sensorlogger.storage.StorageWriter;
 
 public class IntroActivity extends Activity {
 	
@@ -57,13 +61,25 @@ public class IntroActivity extends Activity {
 	}
 
 	private void saveMetadata(){
-		EventWriter writer = new EventWriter(this, FileConstants.FILENAME[0]);
-		String time = String.valueOf(System.currentTimeMillis());
-		String imei = String.valueOf(IMEI);
-		String s = ((standing)? "1" : "0");
-		String c = (hasCase)? "1" : "0";
-		String line = time + ',' + imei + ',' + s + ',' + c;
-		writer.write(line);
+		File dir = StorageUtils.getExternalDirectory(this);
+		File file = new File(dir, StorageConsts.FILE_METADATA);
+		file.delete();
+		
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		
+		StorageWriter writer = new StorageWriter(this, StorageConsts.FILE_METADATA);
+		StringBuilder builder = new StringBuilder();
+		builder.append(String.valueOf(System.currentTimeMillis()) + ',');// Time
+		builder.append(String.valueOf(IMEI) + ',');// IMEI
+		builder.append(((standing)? "1" : "0") + ',');// Standing = 1 
+		builder.append(((hasCase)? "1" : "0") + ',');// Has case = 1 
+		builder.append(android.os.Build.MODEL + ',');// Model
+		builder.append(metrics.densityDpi + ',');
+		builder.append(metrics.heightPixels + ',');
+		builder.append(metrics.widthPixels);
+		
+		writer.write(builder.toString());
 		writer.close();
 	}
 	

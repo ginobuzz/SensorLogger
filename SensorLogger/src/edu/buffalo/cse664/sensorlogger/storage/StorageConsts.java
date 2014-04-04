@@ -1,17 +1,15 @@
 package edu.buffalo.cse664.sensorlogger.storage;
 
-public class FileConstants {
+public class StorageConsts {
 
 	/* Directory Name */
 	public static final String DIRECTORY = "SensorLogger";
 	
-	/* Collected Data Filenames */
-	public static final String[] FILENAME = { 
-		"Metadata",
-		"TouchEvents", 
-		"AccelerometerEvents", 
-		"GyroscopeEvents"
-	};
+	/* Filenames */
+	public static final String FILE_METADATA = "Metadata.txt";
+	public static final String FILE_TOUCH	 = "Touch.txt";
+	public static final String FILE_ACCEL	 = "Accel.txt";
+	public static final String FILE_GYROS	 = "Gyros.txt";
 	
 	/* Zip Filename */
 	public static final String ZIPFILE = "data.zip";

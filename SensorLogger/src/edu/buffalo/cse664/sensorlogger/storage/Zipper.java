@@ -12,20 +12,18 @@ import java.util.zip.ZipOutputStream;
 
 import android.content.Context;
 import android.util.Log;
-import edu.buffalo.cse664.sensorlogger.FileManager;
 
 public class Zipper {
 
 	private static final String TAG = "Zipper";
 	
-	private static final String[] FILE = FileManager.FILENAME;
-	private byte[] buffer = new byte[FileConstants.BUFFER];
+	private byte[] buffer = new byte[StorageConsts.BUFFER];
 	private File dir;
 	private ZipOutputStream zipper;
 	
 	
 	public Zipper(Context context){
-		dir = FileUtils.getExternalDirectory(context);
+		dir = StorageUtils.getExternalDirectory(context);
 	}
 	
 	public File getZip(){
@@ -39,10 +37,10 @@ public class Zipper {
 			return null;
 		} 
 		
-		if(!zipFile(FILE[0])){Log.e(TAG, "Failed to zip metadata");}
-		if(!zipFile(FILE[1])){Log.e(TAG, "Failed to zip touch");}
-		if(!zipFile(FILE[2])){Log.e(TAG, "Failed to zip accel");}
-		if(!zipFile(FILE[3])){Log.e(TAG, "Failed to zip gyro");}
+		if(!zipFile(StorageConsts.FILE_METADATA)){Log.e(TAG, "Failed to zip metadata");}
+		if(!zipFile(StorageConsts.FILE_TOUCH)){Log.e(TAG, "Failed to zip touch");}
+		if(!zipFile(StorageConsts.FILE_ACCEL)){Log.e(TAG, "Failed to zip accel");}
+		if(!zipFile(StorageConsts.FILE_GYROS)){Log.e(TAG, "Failed to zip gyros");}
 		
 		try {
 			zipper.close();
@@ -57,7 +55,7 @@ public class Zipper {
 	}
 	
 	private File newfile(){
-		File file = new File(dir, FileConstants.ZIPFILE);
+		File file = new File(dir, StorageConsts.ZIPFILE);
 		if(file.exists()){ 
 			Log.d(TAG, "Existing zipfile found");
 			if(file.delete()) Log.d(TAG, "Old file deleted.");
@@ -81,7 +79,7 @@ public class Zipper {
 		
 		try {
 			fis = new FileInputStream(file);
-			origin = new BufferedInputStream(fis, FileConstants.BUFFER);
+			origin = new BufferedInputStream(fis, StorageConsts.BUFFER);
 		} catch (FileNotFoundException e) {
 			Log.e(TAG + ": " + file.getName(), "Failed to get input stream.");
 		} 
@@ -103,7 +101,7 @@ public class Zipper {
 		}
 		
 		try {
-			while((count = origin.read(buffer, 0, FileConstants.BUFFER)) != -1){
+			while((count = origin.read(buffer, 0, StorageConsts.BUFFER)) != -1){
 				zipper.write(buffer, 0, count);
 			}
 		} catch (IOException e) {

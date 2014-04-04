@@ -15,7 +15,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
-import edu.buffalo.cse664.sensorlogger.storage.FileUtils;
+import edu.buffalo.cse664.sensorlogger.storage.StorageUtils;
 
 public class NetworkClient {
 
@@ -39,7 +39,7 @@ public class NetworkClient {
 		}
 		
 		// Create entity.
-		byte[] data = FileUtils.fileToByteArray(file);
+		byte[] data = StorageUtils.fileToByteArray(file);
 		Log.d(TAG, "Size: " + data.length);
 		mEntity = new ByteArrayEntity(data);
 		

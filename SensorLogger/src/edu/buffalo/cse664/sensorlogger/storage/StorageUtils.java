@@ -9,7 +9,7 @@ import java.io.IOException;
 import android.content.Context;
 import android.util.Log;
 
-public class FileUtils {
+public class StorageUtils {
 	
 	public static final String TAG = "FileUtils";
 	
@@ -36,7 +36,7 @@ public class FileUtils {
 	}
 	
 	public static File getExternalDirectory(Context context){
-		File dir = new File(context.getExternalCacheDir(), FileConstants.DIRECTORY);
+		File dir = new File(context.getExternalCacheDir(), StorageConsts.DIRECTORY);
 		dir.mkdirs();
 		return dir;
 	}

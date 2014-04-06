@@ -10,104 +10,122 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import edu.buffalo.cse664.sensorlogger.storage.StorageWriter;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import edu.buffalo.cse664.sensorlogger.storage.StorageConsts;
+import edu.buffalo.cse664.sensorlogger.storage.StorageWriter;
 
 
-public class TouchRecorder extends SurfaceView implements Runnable {
+public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListener {
 
 	public static final String TAG = "mSurfaceView";
 	public static final int CIRCLE_RADIUS = 50;
+	public static final int CIRCLE_PADDING = 10;
+	public static final int COLOR_CIRCLE = Color.parseColor("#63AFFF");
+	public static final int COLOR_BACKGROUND = Color.parseColor("#F2F2F2");
 	
-	private SurfaceHolder mHolder;
-	private Thread mDrawThread;
-	public float mX, mY;
-	private Paint mPaint;
-	private Random mRand;
+	private float x_pos = -100;
+	private float y_pos = -100;
+	private float x_max = 0;
+	private float y_max = 0;
+	
+	private Integer count;
+	private Thread drawThread;
+	private SurfaceHolder holder;
+	private Paint paint;
+	private Random rand;
+	private StorageWriter writer;
 	private boolean running = false;
-	private StorageWriter mWriter;
-	public int count;
-	public int color;
+	
 	
 	public TouchRecorder(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mWriter = new StorageWriter(context, StorageConsts.FILE_TOUCH);
-		mPaint = new Paint();
-		mPaint.setAntiAlias(true);
-		mPaint.setColor(Color.parseColor("#63AFFF"));
-		mRand = new Random();
-		color = Color.parseColor("#F2F2F2");
+		writer = new StorageWriter(context, StorageConsts.FILE_TOUCH);
+		paint = new Paint();
+		paint.setAntiAlias(true);
+		paint.setColor(COLOR_CIRCLE);
+		rand = new Random();
 	}
 
+	public synchronized void start(){
+		running = true;
+		count = 0;
+		holder = getHolder();
+		drawThread = new Thread(this);
+		drawThread.start();
+		redraw();
+	}
+	
+	public synchronized void stop(){
+		running = false;
+		try {
+			drawThread.join(2000);
+		} catch (InterruptedException e) {
+			drawThread.interrupt();
+		}
+	}
+	
+	public int getCount(){
+		synchronized(count){
+			return count.intValue();
+		}
+	}
+	
 	@Override
 	public void run() {
 		while(running){
-			if(!mHolder.getSurface().isValid()) continue;
-			//else...
-			Canvas canvas = mHolder.lockCanvas();
-			canvas.drawColor(color);
-			canvas.drawCircle(mX, mY, CIRCLE_RADIUS, mPaint);
-			mHolder.unlockCanvasAndPost(canvas);
+			if(!holder.getSurface().isValid()) continue;
+			Canvas canvas = holder.lockCanvas();
+			canvas.drawColor(COLOR_BACKGROUND);
+			canvas.drawCircle(x_pos, y_pos, CIRCLE_RADIUS, paint);
+			holder.unlockCanvasAndPost(canvas);
 		}
 	}
 	
 	@Override
-    protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld)
+    protected void onSizeChanged(int l, int w, int oldl, int oldw)
     {        
-        super.onSizeChanged(xNew, yNew, xOld, yOld);
-        newDotLocation();
+        super.onSizeChanged(l, w, oldl, oldw);
+        if(l > oldl) x_max = l;
+        if(w > oldw) y_max = w;
+        redraw();
     }
 	
-	public void resume(Context context){mHolder = getHolder();
-		mX = mY = -100;
-		count = 0;
-		running = true;
-		mDrawThread = new Thread(this);
-		mDrawThread.start();
-		newDotLocation();
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		super.onTouchEvent(event);
+		double x_len = Math.pow(x_pos - event.getX(), 2);
+		double y_len = Math.pow(y_pos - event.getY(), 2);
+		double distance = Math.sqrt(x_len + y_len);
+		if(distance < CIRCLE_RADIUS + CIRCLE_PADDING){
+			synchronized(count){
+				recordEvent(count.intValue(), event);
+				++count;
+				redraw();
+			}
+		}
+		return false;
 	}
 	
-	public void pause(){
-		running = false;
-		mWriter.close();
-		setOnTouchListener(null);
+	private void redraw(){
+		final int diameter = 2 * CIRCLE_RADIUS;
+		if(x_max > diameter) x_pos = CIRCLE_RADIUS + rand.nextInt((int)x_max - diameter);
+		if(y_max > diameter) y_pos = CIRCLE_RADIUS + rand.nextInt((int)y_max - diameter);
+	}
+	
+	public void recordEvent(final int c, final MotionEvent event){
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				if(writer == null) return;
+				String line = String.valueOf(event.getEventTime()) + ',' +
+						String.valueOf(c) + ',' +
+						String.valueOf(event.getX()) + ',' +
+						String.valueOf(event.getY()) + ',' +
+						String.valueOf(event.getPressure());
+				writer.write(line);
+			}
+		}).start();
 	}
 
-	public void recordEvent(MotionEvent event){
-		final int padding = 10;
-		boolean xDist = Math.abs(event.getX() - mX) < CIRCLE_RADIUS + padding;
-		boolean yDist = Math.abs(event.getY() - mY) < CIRCLE_RADIUS + padding;
-		if(xDist && yDist){
-			new Recorder(event);
-		}
-	}
-	
-	private void newDotLocation(){
-		int width = getWidth();
-		int height = getHeight();
-		if(width < 2*CIRCLE_RADIUS) mX = CIRCLE_RADIUS;
-		else mX = CIRCLE_RADIUS + mRand.nextInt(width  - (2*CIRCLE_RADIUS));
-		if(height < 2*CIRCLE_RADIUS) mY = CIRCLE_RADIUS;
-		else mY = CIRCLE_RADIUS + mRand.nextInt(height  - (2*CIRCLE_RADIUS));
-	}
-	
-	
-	private class Recorder {
-		public Recorder(final MotionEvent event){
-			new Thread(new Runnable(){
-				@Override
-				public void run() {
-					++count;
-					newDotLocation();
-					if(mWriter == null) return;
-					String line = String.valueOf(event.getEventTime()) + ',' +
-							String.valueOf(event.getX()) + ',' +
-							String.valueOf(event.getY()) + ',' +
-							String.valueOf(event.getPressure());
-					mWriter.write(line);
-				}
-			}).start();
-		}
-	}
-	
 }

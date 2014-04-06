@@ -65,6 +65,7 @@ public class SensorRecorder implements SensorEventListener {
 				if(acc_writer == null || gyr_writer == null) return;
 				
 				String line = String.valueOf(event.timestamp) + ',' +
+						String.valueOf(MainActivity.counter) + ',' + 
 						String.valueOf(event.values[0]) + ',' +
 						String.valueOf(event.values[1]) + ',' +
 						String.valueOf(event.values[2]) + ',' +

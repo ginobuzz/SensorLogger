@@ -1,40 +1,60 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="@color/White"
+    android:gravity="center"
     tools:context=".MainActivity" >
 
-     <FrameLayout
-         android:id="@+id/title"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content" >
-
-         <include layout="@layout/titleview" />
-     </FrameLayout>
-     
-    <TextView 
+    <FrameLayout
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Press the dots as they appear."
+        android:layout_alignParentTop="true" >
+
+        <include layout="@layout/titleview" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
         android:gravity="center"
         android:padding="10dp"
-        android:textSize="18sp"/>
-    
-     <View
-     	android:layout_width="match_parent"
-     	android:layout_height="1dp"
-     	android:background="#E6E6E6" />
+        android:text="Press the dots as they appear."
+        android:textSize="18sp" />
 
-    
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_prompt"
+        android:background="#E6E6E6" />
+
     <edu.buffalo.cse664.sensorlogger.TouchRecorder
-       android:id="@+id/surfacelogger"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:padding="10dp"
-       />
+        android:id="@+id/surfacelogger"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/divider2"
+        android:layout_below="@+id/divider1"
+        android:padding="10dp" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/tv_counter"
+        android:background="#E6E6E6" />
     
-    
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_counter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Number Pressed: 0"
+        android:textSize="16sp" />
+
+</RelativeLayout>

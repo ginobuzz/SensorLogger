@@ -37,7 +37,13 @@
         <activity 
             android:name="edu.buffalo.cse664.sensorlogger.FinalActivity"
             android:screenOrientation="portrait"/>
-        
     </application>
+    
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="false"
+        android:anyDensity="true"/>
 
 </manifest>

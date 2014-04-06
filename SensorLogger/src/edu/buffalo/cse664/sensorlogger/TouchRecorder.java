@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -23,6 +24,7 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 	public static final int CIRCLE_PADDING = 10;
 	public static final int COLOR_CIRCLE = Color.parseColor("#63AFFF");
 	public static final int COLOR_BACKGROUND = Color.parseColor("#F2F2F2");
+	public static final int VIBRATE_DURATION = 40;
 	
 	private float x_pos = -100;
 	private float y_pos = -100;
@@ -35,12 +37,14 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 	private Paint paint;
 	private Random rand;
 	private StorageWriter writer;
+	private Vibrator vib;
 	private boolean running = false;
 	
 	
 	public TouchRecorder(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		writer = new StorageWriter(context, StorageConsts.FILE_TOUCH);
+		vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 		paint = new Paint();
 		paint.setAntiAlias(true);
 		paint.setColor(COLOR_CIRCLE);
@@ -99,6 +103,7 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 		double distance = Math.sqrt(x_len + y_len);
 		if(distance < CIRCLE_RADIUS + CIRCLE_PADDING){
 			synchronized(count){
+				vib.vibrate(VIBRATE_DURATION);
 				recordEvent(count.intValue(), event);
 				++count;
 				redraw();

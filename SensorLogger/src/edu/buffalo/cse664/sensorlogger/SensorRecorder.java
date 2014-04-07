@@ -16,7 +16,8 @@ public class SensorRecorder implements SensorEventListener {
 	
 	private StorageWriter acc_writer;
 	private StorageWriter gyr_writer;
-	private HandlerThread ht1, ht2;
+	private StorageWriter rot_writer;
+	private HandlerThread ht1, ht2, ht3;
 	private SensorManager sManager;
 	
 	
@@ -24,34 +25,49 @@ public class SensorRecorder implements SensorEventListener {
 		sManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
 		acc_writer = new StorageWriter(context, StorageConsts.FILE_ACCEL);
 		gyr_writer = new StorageWriter(context, StorageConsts.FILE_GYROS);
+		rot_writer = new StorageWriter(context, StorageConsts.FILE_ROTAT);
 		ht1 = new HandlerThread(StorageConsts.FILE_ACCEL);
 		ht2 = new HandlerThread(StorageConsts.FILE_GYROS);
+		ht3 = new HandlerThread(StorageConsts.FILE_ROTAT);
 	}
 	
 	public synchronized void start(){
-		Sensor s1, s2;
+		Sensor s1, s2, s3;
+		
 		// Start Accelerometer Listener
 		ht1.start(); Handler h1 = new Handler(ht1.getLooper());
 		if((s1=sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER))!=null)
 			sManager.registerListener(this, s1, DELAY, h1);
+		
 		// Start Gyroscope Listener
 		ht2.start(); Handler h2 = new Handler(ht2.getLooper());
 		if((s2=sManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE))!=null)
 			sManager.registerListener(this, s2, DELAY, h2);
+		
+		// Start Rotation Vector Listener
+		ht3.start(); Handler h3 = new Handler(ht3.getLooper());
+		if((s3=sManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR))!=null)
+			sManager.registerListener(this, s3, DELAY, h3);
 	}
 	
 	public synchronized void stop(){
 		sManager.unregisterListener(this);
 		ht1.quit();
 		ht2.quit();
+		ht3.quit();
 		acc_writer.close();
 		gyr_writer.close();
+		rot_writer.close();
 	}
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER)record(event, 2);
-		else record(event, 3);
+		if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
+			record(event, 2);
+		else if(event.sensor.getType()==Sensor.TYPE_GYROSCOPE) 
+			record(event, 3);
+		else if(event.sensor.getType()==Sensor.TYPE_ROTATION_VECTOR) 
+			record(event, 4);
 	}
 
 	@Override
@@ -73,6 +89,7 @@ public class SensorRecorder implements SensorEventListener {
 				
 				if(id == 2) acc_writer.write(line);
 				if(id == 3) gyr_writer.write(line);
+				if(id == 4) rot_writer.write(line);
 			}
 		}).start();
 	}

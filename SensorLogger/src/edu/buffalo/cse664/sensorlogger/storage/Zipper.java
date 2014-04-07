@@ -41,6 +41,7 @@ public class Zipper {
 		if(!zipFile(StorageConsts.FILE_TOUCH)){Log.e(TAG, "Failed to zip touch");}
 		if(!zipFile(StorageConsts.FILE_ACCEL)){Log.e(TAG, "Failed to zip accel");}
 		if(!zipFile(StorageConsts.FILE_GYROS)){Log.e(TAG, "Failed to zip gyros");}
+		if(!zipFile(StorageConsts.FILE_ROTAT)){Log.e(TAG, "Failed to zip rotat");}
 		
 		try {
 			zipper.close();

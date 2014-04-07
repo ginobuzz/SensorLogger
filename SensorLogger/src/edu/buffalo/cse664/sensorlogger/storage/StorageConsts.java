@@ -10,6 +10,7 @@ public class StorageConsts {
 	public static final String FILE_TOUCH	 = "Touch.txt";
 	public static final String FILE_ACCEL	 = "Accel.txt";
 	public static final String FILE_GYROS	 = "Gyros.txt";
+	public static final String FILE_ROTAT	 = "Rotate.txt";
 	
 	/* Zip Filename */
 	public static final String ZIPFILE = "data.zip";

@@ -68,6 +68,7 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 		} catch (InterruptedException e) {
 			drawThread.interrupt();
 		}
+		writer.close();
 	}
 	
 	public int getCount(){
@@ -105,7 +106,7 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 		if(distance < CIRCLE_RADIUS + CIRCLE_PADDING){
 			synchronized(count){
 				vib.vibrate(VIBRATE_DURATION);
-				recordEvent(count.intValue(), event);
+				new RecorderThread(count.intValue(), event).start();
 				++count;
 				redraw();
 			}
@@ -119,20 +120,33 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 		if(y_max > diameter) y_pos = CIRCLE_RADIUS + rand.nextInt((int)y_max - diameter);
 	}
 	
-	public void recordEvent(final int c, final MotionEvent event){
-		new Thread(new Runnable(){
-			@Override
-			public void run() {
-				Log.d(TAG, "RECORDING");
-				if(writer == null) return;
-				String line = String.valueOf(event.getEventTime()) + ',' +
-						String.valueOf(c) + ',' +
-						String.valueOf(event.getX()) + ',' +
-						String.valueOf(event.getY()) + ',' +
-						String.valueOf(event.getPressure());
-				writer.write(line);
-			}
-		}).start();
+	private class RecorderThread implements Runnable {
+		
+		private int count;
+		private MotionEvent event;
+		
+		public RecorderThread(int count, MotionEvent event){
+			this.count = count;
+			this.event = event;
+		}
+
+		public void start(){
+			new Thread(this).start();
+		}
+		
+		@Override
+		public void run() {
+			Log.d(TAG, "RECORDING");
+			if(writer == null) return;
+			String line = String.valueOf(event.getEventTime()) + ',' +
+					String.valueOf(count) + ',' +
+					String.valueOf(event.getX()) + ',' +
+					String.valueOf(event.getY()) + ',' +
+					String.valueOf(event.getPressure());
+			writer.write(line);
+		}
+		
+		
 	}
 
 }

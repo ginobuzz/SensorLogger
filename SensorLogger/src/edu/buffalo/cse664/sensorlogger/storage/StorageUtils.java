@@ -26,9 +26,7 @@ public class StorageUtils {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return null;
-			//TODO: LOG
 		} catch (IOException e) {
-			//TODO: LOG
 			e.printStackTrace();
 			return null;
 		}

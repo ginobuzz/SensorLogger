@@ -43,14 +43,16 @@ public class FinalActivity extends Activity {
 		super.onStart();
 		
 		File zip = getZippedResults();
-		
-		if(zip==null)
-			tv.setText("Failed to zip file.");
-		else
-			sendResults(zip);
+		if(zip==null) tv.setText("Failed to zip file.");
+		else sendResults(zip);
 		
 		bt.setText("Exit");
 		bt.setClickable(true);
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
 		StorageUtils.clearCache(this);
 	}
 	

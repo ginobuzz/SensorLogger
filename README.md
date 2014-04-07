@@ -26,7 +26,7 @@ timestamp, #touch, x, y, z, accuracy
 timestamp, #touch, x, y, z, accuracy
 ```
 
-###Rotational-Vector Events
+###Rotation Vector Events
 ```
 timestamp, #touch, x, y, z, accuracy
 ```

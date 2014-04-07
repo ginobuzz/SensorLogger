@@ -16,7 +16,17 @@ timestamp, IMEI, standing=1, case=1, model-id, density-dpi, height-pixels, width
 timestamp, #touch, x, y, pressure
 ```
 
-###Sensor Events
+###Accelerometer Events
+```
+timestamp, #touch, x, y, z, accuracy
+```
+
+###Gyroscope Events
+```
+timestamp, #touch, x, y, z, accuracy
+```
+
+###Rotational-Vector Events
 ```
 timestamp, #touch, x, y, z, accuracy
 ```

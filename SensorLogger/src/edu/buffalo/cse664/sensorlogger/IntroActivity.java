@@ -75,9 +75,9 @@ public class IntroActivity extends Activity {
 		builder.append(((standing)? "1" : "0") + ',');// Standing = 1 
 		builder.append(((hasCase)? "1" : "0") + ',');// Has case = 1 
 		builder.append(android.os.Build.MODEL + ',');// Model
-		builder.append(metrics.densityDpi + ',');
-		builder.append(metrics.heightPixels + ',');
-		builder.append(metrics.widthPixels);
+		builder.append(String.valueOf(metrics.densityDpi) + ',');
+		builder.append(String.valueOf(metrics.heightPixels) + ',');
+		builder.append(String.valueOf(metrics.widthPixels));
 		
 		writer.write(builder.toString());
 		writer.close();

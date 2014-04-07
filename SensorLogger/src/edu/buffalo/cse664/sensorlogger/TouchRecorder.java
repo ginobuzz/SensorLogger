@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Vibrator;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -122,6 +123,7 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 		new Thread(new Runnable(){
 			@Override
 			public void run() {
+				Log.d(TAG, "RECORDING");
 				if(writer == null) return;
 				String line = String.valueOf(event.getEventTime()) + ',' +
 						String.valueOf(c) + ',' +

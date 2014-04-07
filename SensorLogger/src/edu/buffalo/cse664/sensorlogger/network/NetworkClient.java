@@ -14,52 +14,54 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import edu.buffalo.cse664.sensorlogger.storage.StorageUtils;
 
-public class NetworkClient {
+public class NetworkClient implements Runnable {
 
 	public static final String TAG = "NetworkClient";
 	
+	private ConnectivityManager manager;
 	private HttpClient mClient;
 	private HttpPost mRequest;
 	private HttpEntity mEntity;
 	
 	
-	public NetworkClient(){}
+	public NetworkClient(Context context){
+		manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	}
 	
-	
-	public void postFile(String filepath){
+	public void post(String filepath){
+		// Check network status.
+		if(!isNetworkAvailable()){
+			Log.e(TAG, "Network unavailable.");
+			return;
+		}
 		
-		// Find zip file.
+		// Get file.
 		File file = new File(filepath);
 		if(!file.exists()){
 			Log.e(TAG, "[POST Failed] No file found.");
 			return;
 		}
 		
-		// Create entity.
+		// Prepare post.
 		byte[] data = StorageUtils.fileToByteArray(file);
 		Log.d(TAG, "Size: " + data.length);
 		mEntity = new ByteArrayEntity(data);
 		
-		new Thread(new Runnable(){
-
-			@Override
-			public void run() {
-				post();
-			}
-			
-		}).start();
-		
-		
+		// Post.
+		new Thread(this).start();
 	}
 	
-	private void post(){
+	@Override
+	public void run() {
 		mClient = new DefaultHttpClient();
 		mRequest = new HttpPost(NetworkConstants.URL);
 		mRequest.setEntity(mEntity);
-		
 		// Execute request.
 		HttpResponse response = null;
 		try {
@@ -72,6 +74,11 @@ public class NetworkClient {
 			return;
 		}
 		Log.d(TAG, "Response: " + getStringResponse(response));
+	}
+	
+	private boolean isNetworkAvailable() {
+	    NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 	
 	private static String getStringResponse(HttpResponse response){
@@ -102,5 +109,8 @@ public class NetworkClient {
 		return builder.toString();
 	}
 
+
+
 	
+
 }

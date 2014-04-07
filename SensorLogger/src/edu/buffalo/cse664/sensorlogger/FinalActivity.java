@@ -26,9 +26,7 @@ public class FinalActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_final);
-		
 		tv = (TextView)findViewById(R.id.tv1);
-		
 		bt = (Button)findViewById(R.id.button1);
 		bt.setOnClickListener(new OnClickListener(){
 			@Override
@@ -44,25 +42,38 @@ public class FinalActivity extends Activity {
 	public void onStart(){
 		super.onStart();
 		
-		tv.setText("Zipping results.");
-		zipper = new Zipper(this);
-		File zipfile = zipper.getZip();
+		File zip = getZippedResults();
 		
-		if(zipfile!=null){
-			tv.setText("Sending results.");
-			NetworkClient client = new NetworkClient();
-			client.postFile(zipfile.getAbsolutePath());
-			tv.setText("Results have been sent.");
-		}else {
-			Log.e(TAG, "Zipfile is null.");
-			tv.setText("FAILED TO ZIP");
-		}
+		if(zip==null)
+			tv.setText("Failed to zip file.");
+		else
+			sendResults(zip);
 		
 		bt.setText("Exit");
 		bt.setClickable(true);
 		StorageUtils.clearCache(this);
 	}
 	
-
+	private File getZippedResults(){
+		tv.setText("Zipping results.");
+		zipper = new Zipper(this);
+		File zip = zipper.getZip();
+		if(zip == null){
+			Log.e(TAG, "Failed to zip file.");
+			return null;
+		}
+		else if(!zip.exists()){
+			Log.e(TAG, "Zip file does not exist.");
+			return null;
+		}
+		return zip;
+	}
+	
+	private void sendResults(File file){
+		tv.setText("Sending results.");
+		NetworkClient client = new NetworkClient(this);
+		client.post(file.getAbsolutePath());
+		tv.setText("Results have been sent.");
+	}
 	
 }

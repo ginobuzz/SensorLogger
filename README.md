@@ -5,31 +5,60 @@ UB CSE664 Final Project Application
 Collects touch and sensor data from user input and sends it to a dedicated server.
 
 
-#Log Format
+
+#Results
+
 ###Metadata
+######Filename
+```
+Metadata.txt
+```
+######Format
 ```
 timestamp, IMEI, standing=1, case=1, model-id, density-dpi, height-pixels, width-pixels
 ```
 
 ###Touch Events
+######Filename
+```
+Touch.txt
+```
+######Format
 ```
 timestamp, #touch, x, y, pressure
 ```
 
 ###Accelerometer Events
+######Filename
+```
+Accel.txt
+```
+######Format
 ```
 timestamp, #touch, x, y, z, accuracy
 ```
 
-###Gyroscope Events
+####Gyroscope Events
+######Filename
+```
+Gyros.txt
+```
+######Format
 ```
 timestamp, #touch, x, y, z, accuracy
 ```
 
-###Rotation Vector Events
+####Rotation Vector Events
+######Filename
+```
+Rotate.txt
+```
+######Format
 ```
 timestamp, #touch, x, y, z, accuracy
 ```
+
+
 
 #Version History
 

@@ -1,6 +1,10 @@
 SensorLogger
 ============
-UB CSE664 Final Project Application 
+**University at Buffalo**
+
+**CSE664: Applied Cryptography and Computer Security**
+
+**Final Project Application**
 
 Collects touch and sensor data from user input and sends it to a dedicated server.
 

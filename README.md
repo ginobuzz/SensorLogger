@@ -6,61 +6,46 @@ Collects touch and sensor data from user input and sends it to a dedicated serve
 
 
 
-#Results
+##Submitted Data
 
-###Metadata
-######Filename
+####Metadata
 ```
-Metadata.txt
-```
-######Format
-```
-timestamp, IMEI, standing=1, case=1, model-id, density-dpi, height-pixels, width-pixels
+Filename: Metadata.txt
+Format: timestamp, IMEI, standing=1, case=1, model-id, density-dpi, height-pixels, width-pixels
 ```
 
-###Touch Events
-######Filename
+####Touch Events
 ```
-Touch.txt
-```
-######Format
-```
-timestamp, #touch, x, y, pressure
+Filename: Touch.txt
+Format: timestamp, #touch, x, y, pressure
 ```
 
-###Accelerometer Events
-######Filename
+####Accelerometer Events
 ```
-Accel.txt
-```
-######Format
-```
-timestamp, #touch, x, y, z, accuracy
+Filename: Accel.txt
+Format: timestamp, #touch, x, y, z, accuracy
 ```
 
 ####Gyroscope Events
-######Filename
 ```
-Gyros.txt
-```
-######Format
-```
-timestamp, #touch, x, y, z, accuracy
+Filename: Gyros.txt
+Format: timestamp, #touch, x, y, z, accuracy
 ```
 
 ####Rotation Vector Events
-######Filename
 ```
-Rotate.txt
-```
-######Format
-```
-timestamp, #touch, x, y, z, accuracy
+Filename: Rotate.txt
+Format: timestamp, #touch, x, y, z, accuracy
 ```
 
 
 
 #Version History
+
+####1.2
+- Added support to record Rotation Vector sensor events.
+- Increased number of clicks to 20
+- Modified UI
 
 ####1.1
 - Updated data format to include the associated touch event with each sensor event.

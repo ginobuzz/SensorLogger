@@ -40,12 +40,12 @@ Format: timestamp, #touch, x, y, z, accuracy
 
 
 
-#Version History
+##Version History
 
 ####1.2
 - Added support to record Rotation Vector sensor events.
-- Increased number of clicks to 20
-- Modified UI
+- Increased number of clicks to 20.
+- Modified UI.
 
 ####1.1
 - Updated data format to include the associated touch event with each sensor event.

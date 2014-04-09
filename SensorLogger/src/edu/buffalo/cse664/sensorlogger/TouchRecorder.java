@@ -99,9 +99,10 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 		double x_len = Math.pow(x_pos - event.getX(), 2);
 		double y_len = Math.pow(y_pos - event.getY(), 2);
 		double distance = Math.sqrt(x_len + y_len);
+		long timestamp = System.currentTimeMillis();
 		if(distance < CIRCLE_RADIUS + CIRCLE_PADDING){
 			synchronized(count){
-				new RecorderThread(count.intValue(), event).start();
+				new RecorderThread(count.intValue(), event, timestamp).start();
 				++count;
 				redraw();
 			}
@@ -119,10 +120,12 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 		
 		private int count;
 		private MotionEvent event;
+		private long timestamp;
 		
-		public RecorderThread(int count, MotionEvent event){
+		public RecorderThread(int count, MotionEvent event, long timestamp){
 			this.count = count;
 			this.event = event;
+			this.timestamp = timestamp;
 		}
 
 		public void start(){
@@ -133,7 +136,7 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 		public void run() {
 			Log.d(TAG, "RECORDING");
 			if(writer == null) return;
-			String line = String.valueOf(event.getEventTime()) + ',' +
+			String line = String.valueOf(timestamp) + ',' +
 					String.valueOf(count) + ',' +
 					String.valueOf(event.getX()) + ',' +
 					String.valueOf(event.getY()) + ',' +

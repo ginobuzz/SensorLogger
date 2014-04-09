@@ -1,7 +1,5 @@
 package edu.buffalo.cse664.sensorlogger;
 
-import edu.buffalo.cse664.sensorlogger.storage.StorageWriter;
-import edu.buffalo.cse664.sensorlogger.storage.StorageConsts;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -9,6 +7,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.HandlerThread;
+import edu.buffalo.cse664.sensorlogger.storage.StorageConsts;
+import edu.buffalo.cse664.sensorlogger.storage.StorageWriter;
 
 public class SensorRecorder implements SensorEventListener {
 	
@@ -62,25 +62,25 @@ public class SensorRecorder implements SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		long timestamp = System.currentTimeMillis();
 		if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
-			record(event, 2);
+			record(event, 2, timestamp);
 		else if(event.sensor.getType()==Sensor.TYPE_GYROSCOPE) 
-			record(event, 3);
+			record(event, 3, timestamp);
 		else if(event.sensor.getType()==Sensor.TYPE_ROTATION_VECTOR) 
-			record(event, 4);
+			record(event, 4, timestamp);
 	}
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 	
 	
-	private void record(final SensorEvent event, final int id){
+	private void record(final SensorEvent event, final int id, final long timestamp){
 		new Thread(new Runnable(){
 			@Override
 			public void run() {
 				if(acc_writer == null || gyr_writer == null) return;
-				
-				String line = String.valueOf(event.timestamp) + ',' +
+				String line = String.valueOf(timestamp) + ',' +
 						String.valueOf(MainActivity.counter) + ',' + 
 						String.valueOf(event.values[0]) + ',' +
 						String.valueOf(event.values[1]) + ',' +

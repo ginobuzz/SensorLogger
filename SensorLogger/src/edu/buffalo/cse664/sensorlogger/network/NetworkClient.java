@@ -53,7 +53,7 @@ public class NetworkClient {
             }
 
             HttpClient client = new DefaultHttpClient();
-            HttpPost request = new HttpPost(NetworkConstants.URL);
+            HttpPost request = new HttpPost(NetworkConstants.URI);
     		byte[] data = StorageUtils.fileToByteArray(file);
     		Log.d(TAG, "Size: " + data.length);
     		request.setEntity(new ByteArrayEntity(data));

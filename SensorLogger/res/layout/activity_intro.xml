@@ -77,8 +77,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="6dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
                 android:background="#E6E6E6" />
 
             <CheckBox
@@ -91,15 +91,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="6dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
                 android:background="#E6E6E6" />
 
             <CheckBox
                 android:id="@+id/checkBox2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="  There is a case on my phone."
+                android:text="  I am left-handed."
                 android:textColor="#3D3D3D" />
         </LinearLayout>
     </LinearLayout>

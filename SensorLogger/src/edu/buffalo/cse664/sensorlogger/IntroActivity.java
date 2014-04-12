@@ -21,6 +21,7 @@ public class IntroActivity extends Activity {
 	
 	private String IMEI = null;
 	private boolean standing = false;
+	private boolean leftHanded = false;
 	private boolean hasCase = false;
 	
 	
@@ -31,6 +32,7 @@ public class IntroActivity extends Activity {
 		
 		final CheckBox cb1 = (CheckBox)findViewById(R.id.checkBox1);
 		final CheckBox cb2 = (CheckBox)findViewById(R.id.checkBox2);
+		final CheckBox cb3 = (CheckBox)findViewById(R.id.checkBox3);
 		final Intent mainActivityIntent = new Intent(this, MainActivity.class);
 		
 		// Get IMEI
@@ -55,6 +57,12 @@ public class IntroActivity extends Activity {
 		cb2.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 			@Override
 			public void onCheckedChanged(CompoundButton v, boolean isChecked) {
+				leftHanded = isChecked;
+			}
+		});
+		cb3.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(CompoundButton v, boolean isChecked) {
 				hasCase = isChecked;
 			}
 		});
@@ -73,6 +81,7 @@ public class IntroActivity extends Activity {
 		builder.append(String.valueOf(System.currentTimeMillis()) + ',');// Time
 		builder.append(String.valueOf(IMEI) + ',');// IMEI
 		builder.append(((standing)? "1" : "0") + ',');// Standing = 1 
+		builder.append(((leftHanded)? "1" : "0") + ',');// Left handed = 1 
 		builder.append(((hasCase)? "1" : "0") + ',');// Has case = 1 
 		builder.append(android.os.Build.MODEL + ',');// Model
 		builder.append(String.valueOf(metrics.densityDpi) + ',');

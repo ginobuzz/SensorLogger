@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/background_card"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp" >
+
+        <TextView
+            style="@style/TextStyle1"
+            android:text="DIRECTIONS" />
+
+        <View style="@style/LineStyle" />
+
+        <TextView
+            style="@style/TextStyle2"
+            android:gravity="left"
+            android:text="Answer the questions below.\n\nPress &apos;Begin Experiment&apos;.\n\nClick the dots as they appear on the screen (15 in total)." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_card"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp" >
+
+        <TextView
+            style="@style/TextStyle1"
+            android:text="ADDITIONAL INFORMATION" />
+
+        <View style="@style/LineStyle" />
+
+        <CheckBox
+            android:id="@+id/checkBox1"
+            style="@style/CheckBoxStyle"
+            android:text="  I am currently standing." />
+
+        <View style="@style/LineStyle" />
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            style="@style/CheckBoxStyle"
+            android:text="  I am left-handed." />
+
+        <View style="@style/LineStyle" />
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            style="@style/CheckBoxStyle"
+            android:text="  I have a case on my phone." />
+    </LinearLayout>
+
+</LinearLayout>

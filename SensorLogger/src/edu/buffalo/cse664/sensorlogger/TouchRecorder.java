@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -19,7 +18,7 @@ import edu.buffalo.cse664.sensorlogger.storage.StorageWriter;
 
 public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListener {
 
-	public static final String TAG = "mSurfaceView";
+	public static final String TAG = "TouchRecorder";
 	public static final int CIRCLE_RADIUS = 50;
 	public static final int CIRCLE_PADDING = 10;
 	public static final int COLOR_CIRCLE = Color.parseColor("#63AFFF");
@@ -134,7 +133,6 @@ public class TouchRecorder extends SurfaceView implements Runnable, OnTouchListe
 		
 		@Override
 		public void run() {
-			Log.d(TAG, "RECORDING");
 			if(writer == null) return;
 			String line = String.valueOf(timestamp) + ',' +
 					String.valueOf(count) + ',' +

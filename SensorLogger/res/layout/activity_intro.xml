@@ -15,20 +15,26 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/divider1"
         android:layout_below="@+id/title"
-        android:layout_above="@+id/button1"
         android:gravity="center"
         android:orientation="vertical">
 
         <include layout="@layout/introview" />
     </ScrollView>
 
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#6575A6"
+        android:layout_above="@+id/button1"/>
+    
     <Button
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/background_button"
         android:gravity="center"
         android:paddingBottom="15dp"

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnTouchListener {
 
-	private static final int MAX_TOUCH = 15;
+	private static final int MAX_TOUCH = 20;
 	
 	public static volatile int counter = 0;
 	

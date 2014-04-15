@@ -15,8 +15,21 @@ Collects touch and sensor data from user input and sends it to a dedicated serve
 ####Metadata
 ```
 Filename: Metadata.txt
-Format: timestamp, IMEI, standing=1, case=1, model-id, density-dpi, height-pixels, width-pixels
+Format: timestamp, IMEI, standing=1, left-handed=1, case=1, model, density, height, width
 ```
+| Name | Type | Description|
+|------|------|------------|
+|timestamp|long|System time in UTC format|
+|IMEI|string|Device IMEI|
+|standing|boolean|1 if user is standing; 0 otherwise|
+|left-handed|boolean|1 if user is left-handed; 0 otherwise|
+|left-handed|boolean|1 if user has a case; 0 otherwise|
+|model|string|device model name|
+|density|integer|screen dpi; low = 120, medium = 160, high = 240|
+|height|integer|Height of screen in pixels|
+|width|integer|Width of screen in pixels|
+
+
 
 ####Touch Events
 ```

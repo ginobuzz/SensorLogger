@@ -59,6 +59,14 @@ Format: timestamp, #touch, x, y, z, accuracy
 
 ##Version History
 
+####1.4
+- Added left-hand data.
+- UI changes.
+
+####1.3
+- Removed tablet support.
+- UI changes.
+
 ####1.2
 - Added support to record Rotation Vector sensor events.
 - Increased number of clicks to 20.

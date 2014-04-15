@@ -24,7 +24,7 @@ Format: timestamp, IMEI, standing=1, left-handed=1, case=1, model, density, heig
 |IMEI|string|Device IMEI|
 |standing|boolean|1 if user is standing; 0 otherwise|
 |left-handed|boolean|1 if user is left-handed; 0 otherwise|
-|left-handed|boolean|1 if user has a case; 0 otherwise|
+|case|boolean|1 if user has a case; 0 otherwise|
 |model|string|device model name|
 |density|integer|screen dpi; low = 120, medium = 160, high = 240|
 |height|integer|Height of screen in pixels|

@@ -8,6 +8,7 @@ SensorLogger
 
 Collects touch and sensor data from user input and sends it to a dedicated server.
 
+[Link to application on Google Play](https://play.google.com/store/apps/details?id=edu.buffalo.cse664.sensorlogger)
 
 
 ##Submitted Data
